@@ -1,1 +1,17 @@
-<p>{{persons.toString()}}</p>
+<h1>Resultados</h1>
+
+<div *ngIf="persons.hasWomen">
+    <h2>Mulheres</h2>
+   <p><span>Quantidade: </span>{{persons.women().length}}</p>
+   <p><span>Média: </span>{{persons.averageWomen()}}</p>
+   <p><span>Maior: </span>{{persons.higthWoman()}}</p>
+   <p><span>Menor: </span>{{persons.lowWoman()}}</p>
+</div>
+
+<div *ngIf="persons.hasMen">
+    <h2>Homens</h2>
+    <p><span>Quantidade: </span>{{persons.men().length}}</p>
+    <p><span>Média: </span>{{persons.averageMen()}}</p>
+    <p><span>Maior: </span>{{persons.higthMan()}}</p>
+    <p><span>Menor: </span>{{persons.lowMan()}}</p>
+</div>

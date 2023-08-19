@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class TestAbcComponent {
   persons: Persons = Persons.instance;
+  
+
   constructor() {
     const request = RequestDataHandler.instance;
     
@@ -26,9 +28,19 @@ export type Person = {
 }
 
 export class Persons {
-  static instance = new Persons();
 
+  static instance = new Persons();
+  
   private persons: Person[] = [];
+  
+  hasMen = () => this.men().length > 0;
+  hasWomen = () => this.women().length > 0;
+  averageMen = () => this.average(this.men()).toFixed(2);
+  averageWomen = () => this.average(this.women()).toFixed(2);
+  higthMan = () => this.max(this.men());
+  higthWoman = () => this.max(this.women());
+  lowMan = () => this.min(this.men());
+  lowWoman = () => this.min(this.women());
 
   add(person: Person): void {
     this.persons.push(person);
@@ -38,14 +50,23 @@ export class Persons {
   women = () => this.persons.filter(x => x.gender == Gender.FEMALE);
 
   private average(persons: Person[]): number {
+    if(persons.length <1){
+      return 0;
+    }
     return persons.reduce((x, y) => x + y.heidth, 0) / persons.length;
   }
 
   private max(persons: Person[]): number {
+    if(persons.length <1){
+      return 0;
+    }
     return persons.reduce((x, y) => Math.max(x, y.heidth), -Infinity);
   }
 
   private min(persons: Person[]): number {
+    if(persons.length <1){
+      return 0;
+    }
     return persons.reduce((x, y) => Math.min(x, y.heidth), +Infinity);
   }
 
@@ -57,14 +78,6 @@ export class Persons {
     return ['F', 'M'].includes(gender[0].toUpperCase());
   }
 
-  toString(): string {
-    return `
-      Homens: 
-      Quantidade: ${this.men().length} média: ${this.average(this.men()).toFixed(2)} maior: ${this.max(this.men())} menor: ${this.min(this.men())}
-      Mulheres: 
-      Quantidade: ${this.women().length} média: ${this.average(this.women()).toFixed(2)}  maior: ${this.max(this.women())} menor: ${this.min(this.women())}
-      `;
-  }
 }
 
 export class RequestDataHandler {
